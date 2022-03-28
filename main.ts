@@ -1,7 +1,118 @@
 namespace SpriteKind {
     export const 發射物 = SpriteKind.create()
+    export const 主角技能 = SpriteKind.create()
 }
 function 關卡1 () {
+    mySprite = sprites.create(img`
+        . . . . 5 . 5 . 5 . . . . . . . 
+        . f f f 5 5 5 5 5 f f f . . . . 
+        . f f f f f f f f f f f f f . . 
+        . . d d d d d d d d f f f f . . 
+        . . d d d d d d d d 2 d d . . . 
+        . d d d d f d d f d 2 2 d d . . 
+        . d d d d d d d d d d 2 2 2 . . 
+        . d d d d d d d d d d 2 2 2 . . 
+        . d d d d 3 3 3 3 d d 2 d d . . 
+        . d d d d d d d d d d 2 d d . . 
+        . . d d d d d d d d d d d d . . 
+        . . . . d d d d d d d d d d . . 
+        . . . . . d d d d d 4 4 4 4 4 8 
+        . . . . . . . . 4 4 4 4 4 4 8 8 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Player)
+    mySprite.setPosition(7, 63)
+    mySprite.setVelocity(50, 0)
+    mySprite.setStayInScreen(true)
+    敵人 = sprites.create(img`
+        ..............................
+        ............ccccc.............
+        ...........cbbbbbc............
+        ........ccccccccccccc.........
+        .......cccbbbbcbbbbccc........
+        .......cbcbbbbcbbbbcbc........
+        .......cbcdddddddddcbc........
+        .......ccdddddddddddcc........
+        .........ddd2ddd2ddd..........
+        .........ddddd2ddddd..........
+        .........dddd2d2dddd..........
+        .......ccccccccccccccc........
+        .......cbcbbbbcbbbbcbc........
+        .ff...cbbcbbbbcbbbbcbbc...ff..
+        ...ff.cbbcbbbbcbbbbcbbc.ff....
+        .....fcbbbcbbbcbbbcbbbcf......
+        .......cbbcbbbcbbbcbbc........
+        .......cbbcbbbcbbbcbbc........
+        .......cbbcbbbcbbbcbbc........
+        ........cbbcbbcbbcbbc.........
+        ........cbbcbbcbbcbbc.........
+        ........cbbcbbcbbcbbc.........
+        .........cbbcbcbcbbc..........
+        ..........ccccccccc...........
+        ..........f.......f...........
+        .......ffff.......ffff........
+        ......fffff.......fffff.......
+        ......fffff.......fffff.......
+        ..............................
+        ..............................
+        `, SpriteKind.Enemy)
+    敵人.setPosition(132, 56)
+    敵人.setStayInScreen(true)
+    pause(1000)
+    mySprite.vx = 0
+    mySprite.sayText("投降吧垃圾怪，我來清理你了", 3000, false)
+    controller.moveSprite(mySprite)
+    info.setLife(3)
+    info.setScore(0)
+}
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . 4 4 . . . . . . . 
+        . . . . . . 4 5 5 4 . . . . . . 
+        . . . . . . 2 5 5 2 . . . . . . 
+        . . . . . . . 2 2 . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, mySprite, 100, 0)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.發射物, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+    music.powerDown.play()
+    pause(1000)
+})
+function 敵人攻擊3 () {
+    projectile5 = sprites.createProjectileFromSide(img`
+        . . . . . . . . c c c c . . . . 
+        . . . . c c c c c c c c c . . . 
+        . . . c f c c a a a a c a c . . 
+        . . c c f f f f a a a c a a c . 
+        . . c c a f f c a a f f f a a c 
+        . . c c a a a a b c f f f a a c 
+        . c c c c a c c b a f c a a c c 
+        c a f f c c c a b b 6 b b b c c 
+        c a f f f f c c c 6 b b b a a c 
+        c a a c f f c a 6 6 b b b a a c 
+        c c b a a a a b 6 b b a b b a . 
+        . c c b b b b b b b a c c b a . 
+        . . c c c b c c c b a a b c . . 
+        . . . . c b a c c b b b c . . . 
+        . . . . c b b a a 6 b c . . . . 
+        . . . . . . b 6 6 c c . . . . . 
+        `, -50, randint(0, 100))
+    projectile5.setKind(SpriteKind.發射物)
+    pause(1000)
+}
+function _2 () {
     scene.setBackgroundColor(1)
     scene.setBackgroundImage(img`
         bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
@@ -125,33 +236,83 @@ function 關卡1 () {
         bbbbbbbbbbbbccccccccc6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666ccccccbbbbbbbbbbbbbbbbbbbbb
         bbbbbbbbbbbbccccccccc66666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666cccccbbbbbbbbbbbbbbbbbbbbb
         `)
-    關卡2()
+    關卡1()
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    projectile2 = sprites.createProjectileFromSprite(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 4 4 . . . . . . . 
-        . . . . . . 4 5 5 4 . . . . . . 
-        . . . . . . 2 5 5 2 . . . . . . 
-        . . . . . . . 2 2 . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, mySprite, 100, 0)
+info.onCountdownEnd(function () {
+    mySprite.startEffect(effects.fire, 500)
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.發射物, function (sprite, otherSprite) {
-    info.changeLifeBy(-1)
-    pause(1000)
+sprites.onOverlap(SpriteKind.主角技能, SpriteKind.發射物, function (sprite, otherSprite) {
+    projectile2.setVelocity(100, 0)
 })
-function 關卡3 () {
+function 敵人攻擊2 () {
+    projectile3 = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . c b a c . . . . . . 
+        . . . . c c b c f a c . . . . . 
+        . . . . a f b b b a c . . . . . 
+        . . . . a f f b a f c c . . . . 
+        . . . . c b b a f f c . . . . . 
+        . . . . . b b a f a . . . . . . 
+        . . . . . . c b b . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, 敵人, -50, -25)
+    projectile4 = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . c b a c . . . . . . 
+        . . . . c c b c f a c . . . . . 
+        . . . . a f b b b a c . . . . . 
+        . . . . a f f b a f c c . . . . 
+        . . . . c b b a f f c . . . . . 
+        . . . . . b b a f a . . . . . . 
+        . . . . . . c b b . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, 敵人, -50, 25)
+    projectile3.setKind(SpriteKind.發射物)
+    projectile4.setKind(SpriteKind.發射物)
+    pause(2000)
+}
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    projectile6 = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . b d b . . . . . . 
+        . . . . . . . b d b c . . . . . 
+        . . . . b b c 5 5 5 c b b . . . 
+        . . . . b 5 5 5 1 5 5 5 b . . . 
+        . . . c c 5 5 5 1 5 5 5 c c . . 
+        . . b b 5 5 5 1 1 1 5 5 5 b b . 
+        . . d d 5 1 1 1 1 1 1 1 5 d d . 
+        . . b b 5 5 5 1 1 1 5 5 5 b b . 
+        . . . c c 5 5 5 1 5 5 5 c c . . 
+        . . . . b 5 5 5 1 5 5 5 b . . . 
+        . . . . b b c 5 5 5 c b b . . . 
+        . . . . . . c b d b c . . . . . 
+        . . . . . . . b d b . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, mySprite, 50, 0)
+    projectile6.setKind(SpriteKind.主角技能)
+    info.startCountdown(10)
+    pause(10000)
+})
+info.onLifeZero(function () {
+    mySprite.destroy(effects.spray, 500)
+    game.over(false)
+})
+function 關卡2 () {
     scene.setBackgroundColor(1)
     scene.setBackgroundImage(img`
         9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -276,72 +437,8 @@ function 關卡3 () {
         bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
         `)
 }
-info.onLifeZero(function () {
-    mySprite.destroy(effects.spray, 500)
-    game.over(false)
-})
-function 關卡2 () {
-    mySprite = sprites.create(img`
-        . . . . 5 . 5 . 5 . . . . . . . 
-        . f f f 5 5 5 5 5 f f f . . . . 
-        . f f f f f f f f f f f f f . . 
-        . . d d d d d d d d f f f f . . 
-        . . d d d d d d d d 2 d d . . . 
-        . d d d d f d d f d 2 2 d d . . 
-        . d d d d d d d d d d 2 2 2 . . 
-        . d d d d d d d d d d 2 2 2 . . 
-        . d d d d 3 3 3 3 d d 2 d d . . 
-        . d d d d d d d d d d 2 d d . . 
-        . . d d d d d d d d d d d d . . 
-        . . . . d d d d d d d d d d . . 
-        . . . . . d d d d d 4 4 4 4 4 8 
-        . . . . . . . . 4 4 4 4 4 4 8 8 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Player)
-    mySprite.setPosition(7, 63)
-    mySprite.setVelocity(50, 0)
-    mySprite.setStayInScreen(true)
-    敵人 = sprites.create(img`
-        ..............................
-        ............ccccc.............
-        ...........cbbbbbc............
-        ........ccccccccccccc.........
-        .......cccbbbbcbbbbccc........
-        .......cbcbbbbcbbbbcbc........
-        .......cbcdddddddddcbc........
-        .......ccdddddddddddcc........
-        .........ddd2ddd2ddd..........
-        .........ddddd2ddddd..........
-        .........dddd2d2dddd..........
-        .......ccccccccccccccc........
-        .......cbcbbbbcbbbbcbc........
-        .ff...cbbcbbbbcbbbbcbbc...ff..
-        ...ff.cbbcbbbbcbbbbcbbc.ff....
-        .....fcbbbcbbbcbbbcbbbcf......
-        .......cbbcbbbcbbbcbbc........
-        .......cbbcbbbcbbbcbbc........
-        .......cbbcbbbcbbbcbbc........
-        ........cbbcbbcbbcbbc.........
-        ........cbbcbbcbbcbbc.........
-        ........cbbcbbcbbcbbc.........
-        .........cbbcbcbcbbc..........
-        ..........ccccccccc...........
-        ..........f.......f...........
-        .......ffff.......ffff........
-        ......fffff.......fffff.......
-        ......fffff.......fffff.......
-        ..............................
-        ..............................
-        `, SpriteKind.Enemy)
-    敵人.setPosition(132, 56)
-    敵人.setStayInScreen(true)
-    pause(1000)
-    mySprite.vx = 0
-    mySprite.sayText("投降吧垃圾怪，我來清理你了", 3000, false)
-    controller.moveSprite(mySprite)
-    info.setLife(3)
-    info.setScore(0)
+function 敵人攻擊4 () {
+	
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     info.changeScoreBy(1)
@@ -353,13 +450,19 @@ function _1 () {
     game.splash("人類在這美麗的星球生活", "文明高速發展")
     game.splash("一切看似美好", "直到有一天...")
     game.splash("人類不懂得珍惜資源", "環境充滿著垃圾")
-    關卡1()
+    _2()
 }
+let projectile6: Sprite = null
+let projectile4: Sprite = null
+let projectile3: Sprite = null
+let projectile2: Sprite = null
+let projectile5: Sprite = null
+let projectile: Sprite = null
 let 敵人: Sprite = null
 let mySprite: Sprite = null
-let projectile2: Sprite = null
 _1()
 forever(function () {
+    pause(1000)
     projectile2 = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . f f f f . . . . . . 
@@ -380,5 +483,18 @@ forever(function () {
         `, 敵人, -50, 0)
     projectile2.setKind(SpriteKind.發射物)
     敵人.setVelocity(0, randint(-25, 25))
-    pause(1000)
+})
+forever(function () {
+    if (info.score() >= 30) {
+        敵人攻擊2()
+    }
+    if (info.score() >= 50) {
+        敵人攻擊3()
+    }
+    if (info.score() >= 80) {
+        敵人攻擊4()
+    }
+    if (info.score() >= 100) {
+        game.over(true)
+    }
 })
