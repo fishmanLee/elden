@@ -464,8 +464,6 @@ function 敵人攻擊4 () {
 	
 }
 function 結局 () {
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-    sprites.destroyAllSpritesOfKind(SpriteKind.發射物)
     scene.setBackgroundColor(15)
     scene.setBackgroundImage(img`
         9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -590,8 +588,8 @@ function 結局 () {
         bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
         `)
     mySprite.setPosition(0, 50)
-    mySprite.setVelocity(50, 0)
-    pause(1000)
+    mySprite.setVelocity(25, 0)
+    pause(2000)
     mySprite.vx = 0
     pause(2000)
     game.splash("回過神來", "你發現自己身處在殘破的道路上")
@@ -609,7 +607,7 @@ function 結局 () {
     game.over(true)
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    info.changeScoreBy(1)
+    info.changeScoreBy(100)
     pause(1000)
 })
 function _1 () {
@@ -643,6 +641,9 @@ forever(function () {
         敵人攻擊4()
     }
     if (info.score() >= 100) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy, effects.disintegrate, 2000)
+        sprites.destroyAllSpritesOfKind(SpriteKind.發射物, effects.bubbles, 2000)
+        pause(2000)
         結局()
     }
 })
