@@ -1315,7 +1315,7 @@ function 結局 () {
     game.over(true)
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    info.changeScoreBy(80)
+    info.changeScoreBy(1)
     pause(1000)
 })
 function _1 () {
