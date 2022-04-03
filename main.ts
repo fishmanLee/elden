@@ -916,20 +916,20 @@ function 關卡2 () {
 function 敵人攻擊1 () {
     projectile2 = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
-        . . . . . . f f f f . . . . . . 
-        . . . . f f f b b f f f . . . . 
-        . . . e e e e f f f f f f . . . 
-        . . f e e e e c c c e e f f . . 
-        . . e e e e e c c c e e b f . . 
-        . f e e e e c c c c c b b f f . 
-        . f e e e c c c f f f f b f f . 
-        . f f e e c c f f f f f f f f . 
-        . f c e e c c f f f f f f f f . 
-        . . f c e e c f f f f f c f . . 
-        . . f c c e c c f f f c f f . . 
-        . . . f c c c c c c c c f . . . 
-        . . . . f f c c c c f f . . . . 
-        . . . . . . f f f f . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . e e . . . . . . . e e . . 
+        . . . c e e . . . . . f 7 e . . 
+        . . . . 7 f . 7 . . . c e . . . 
+        . . . . e e f e c c e c e . . . 
+        . . . . e . f e e c 7 e e . . . 
+        . . . . . e c c f f f 7 e . . . 
+        . . . . . c e f e f f e e . . . 
+        . . . . . c 7 7 c f 7 7 e e . . 
+        . . . . . . c c 7 7 c 7 e . . . 
+        . . . . . . e 7 7 c e e e . . . 
+        . . . . . . e e e e e . e . . . 
+        . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, 敵人, -50, 0)
     projectile2.setKind(SpriteKind.發射物)
